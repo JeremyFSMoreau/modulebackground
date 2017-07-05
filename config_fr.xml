@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>modulebackground</name>
+    <displayName><![CDATA[My background module]]></displayName>
+    <version><![CDATA[1.0]]></version>
+    <description><![CDATA[A module to choose background for a specific theme]]></description>
+    <author><![CDATA[J&eacute;r&eacute;my Moreau]]></author>
+    <tab><![CDATA[]]></tab>
+    <is_configurable>1</is_configurable>
+    <need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+</module>
