@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
     <name>modulebackground</name>
-    <displayName><![CDATA[My background module]]></displayName>
+    <displayName><![CDATA[Mon module d&#039;arri&egrave;re-plan]]></displayName>
     <version><![CDATA[1.0]]></version>
-    <description><![CDATA[A module to choose background for a specific theme]]></description>
-    <author><![CDATA[J&eacute;r&eacute;my Moreau]]></author>
+    <description><![CDATA[Un module pour choisir un arri&egrave;re-plan ainsi que des coleurs pour le th&egrave;me ProjetESGI]]></description>
+    <author><![CDATA[Equipe ESGI]]></author>
     <tab><![CDATA[]]></tab>
     <is_configurable>1</is_configurable>
     <need_instance>1</need_instance>

@@ -11,10 +11,10 @@ class ModuleBackground extends Module
     public function __construct()
     {
         $this->name="modulebackground";
-        $this->displayName=$this->l("My background module");
-        $this->author="Jérémy Moreau";
+        $this->author="Equipe ESGI";
         $this->version="1.0";
-        $this->description=$this->l("A module to choose background for a specific theme");
+        $this->displayName=$this->l('My background module');
+        $this->description=$this->l('A module to choose background for a specific theme');
         $this->bootstrap=true;
         parent::__construct();
 
@@ -48,7 +48,7 @@ class ModuleBackground extends Module
     {
         parent::install();
         $this->registerHook('actionFrontControllerSetMedia');
-        $this->registerHook('displayNav1');
+        $this->registerHook('displayNav');
         foreach (scandir(_PS_MODULE_DIR_.$this->name) as $file) {
             if (in_array($file, array('background.jpg', 'background.gif', 'background.png'))) {
                 Configuration::updateGlobalValue('MODBACK_IMG', substr($file, strrpos($file, '.') + 1));
@@ -64,10 +64,10 @@ class ModuleBackground extends Module
         return true;
     }
 
-    public function hookDisplayNav1 ($params)
+    public function hookDisplayNav ($params)
     {
         $this->assignConfigValues();
-        return $this->display(__FILE__,'displayNav1.tpl');
+        return $this->display(__FILE__,'displayNav.tpl');
     }
 
     public function getContent(){
@@ -179,15 +179,34 @@ class ModuleBackground extends Module
         return $helper->generateForm(array($fields_form));
     }
 
+    public function darken_color($rgb, $darker=2) {
+
+        $hash = (strpos($rgb, '#') !== false) ? '#' : '';
+        $rgb = (strlen($rgb) == 7) ? str_replace('#', '', $rgb) : ((strlen($rgb) == 6) ? $rgb : false);
+        if(strlen($rgb) != 6) return $hash.'000000';
+        $darker = ($darker > 1) ? $darker : 1;
+
+        list($R16,$G16,$B16) = str_split($rgb,2);
+
+        $R = sprintf("%02X", floor(hexdec($R16)/$darker));
+        $G = sprintf("%02X", floor(hexdec($G16)/$darker));
+        $B = sprintf("%02X", floor(hexdec($B16)/$darker));
+
+        return $hash.$R.$G.$B;
+    }
+
     public function assignConfigValues()
     {
         $color_picker=Configuration::get('MODBACK_COLOR');
         $color_picker_second=Configuration::get('MODBACK_COLOR_SECOND');
+        $color_picker_second_dark = $this->darken_color($color_picker_second, $color_picker_second_dark=1.5);
+
         $this->context->smarty->assign('image_background',$this->context->link->protocol_content.$this->background_image);
         $this->context->smarty->assign('imgnamedebug',$this->background_imagename);
         $this->context->smarty->assign('imgdebug',$this->background_image);
         $this->context->smarty->assign('color_picker',$color_picker);
         $this->context->smarty->assign('color_picker_second',$color_picker_second);
+        $this->context->smarty->assign('color_picker_second_dark',$color_picker_second_dark);
 
     }
 }
